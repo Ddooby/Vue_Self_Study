@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>Like Sample</title>
+    </head>
+    <body>
+        <div id="root">
+            <div v-if="liked">좋아요 눌렀음</div>
+            <div v-else>좋아요 안눌렀음</div>
+            
+            <button v-on:click="onClickButton">Like</button>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            const instance = new Vue({
+                el : '#root',
+                data : {
+                    liked : false,
+                },
+                methods : {
+                    onClickButton : function() {
+                        this.liked = !this.liked;
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,93 @@
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <title>01. 구구단</title>
+</head>
+<body>
+    <div id="root">
+        <div>{{firstVal}} 곱하기 {{secondVal}} ?</div>
+        <!--         
+        1)
+        <input type="number" v-model="val">
+        <button v-on:click="doCalculate">입력</button>
+        -->
+
+        <!--          
+        2) -->
+        <form v-on:submit="onSubmitForm">
+            <input type="number" ref="answer" v-model="val">
+            <button type="submit">입력</button>
+        </form>
+        
+
+        <div>{{result}}</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const instance = new Vue({
+            el: '#root',
+            data: {
+                // firstVal: Math.round(Math.random() * 9),     // round 함수(반올림) 하니까 0 이 나온다...
+                // secondVal: Math.round(Math.random() * 9),
+                firstVal: Math.ceil(Math.random() * 9),
+                secondVal: Math.ceil(Math.random() * 9),
+                val: '',
+                result: '',
+            },
+            methods: {
+                doCalculate : function () {
+                    let first = this.firstVal;
+                    let second = this.secondVal;
+                    let resultVal = ( first * second );
+                    
+                    if ( resultVal == this.val ) {
+                        this.result = '정답';
+
+                        // 화면초기화
+                        this.firstVal = Math.ceil(Math.random() * 9);
+                        this.secondVal = Math.ceil(Math.random() * 9);
+                        this.val = '';
+                        this.$refs.answer.focus();
+                    } else {
+                        this.result = '땡';
+
+                        // 화면초기화
+                        this.val = '';
+                    }
+                    console.log('doCalculate end');
+                },
+                onSubmitForm : function(e) {
+                    // Sumbit시 화면이 새로고침되는데 막아야하기 때문에...
+                    e.preventDefault();
+                    console.log(e);                    
+                    
+                    if ( this.firstVal * this.secondVal === this.val ) {
+                        this.result = '정답';
+
+                        // 화면초기화
+                        this.firstVal = Math.ceil(Math.random() * 9);
+                        this.secondVal = Math.ceil(Math.random() * 9);
+                        this.val = '';
+                        this.$refs.answer.focus();
+                    } else {
+                        this.result = '땡';
+
+                        // 화면초기화
+                        this.val = '';
+                    }
+                    console.log('onSubmitForm end');
+                }
+            },
+            beforeCreat: {
+
+            }
+        });
+    </script>
+</body>
+</html>
