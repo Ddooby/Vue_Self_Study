@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link href="Css/carousels.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="root">
+        <goods-header v-on:route-page="routePage"></goods-header>
+        <template v-if="page === 'MainPage'">
+            <!-- <carousels></carousels> -->
+            <card-container :goods-datas="goodsList">
+                <template v-slot:carousels>
+                    <carousels></carousels>
+                </template>
+            </card-container>
+        </template>
+
+        <template v-else-if="page === 'RegistrationPage'">
+            <regist-form></regist-form>
+        </template>
+
+        <template v-else-if="page === 'JoinPage'">
+            <join-form></join-form>
+        </template>
+    </div>
+
+    <!-- 도움되는 콘솔 경고를 포함한 개발 버전 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script src="Components/GoodsHeader.js"></script>
+    <script src="Components/CardContainer.js"></script>
+    <script src="Components/Carousels.js"></script>
+    <script src="Components/GoodsCard.js"></script>
+    <script src="Components/GoodsModel.js"></script>
+    <script src="Components/GoodsRegistForm.js"></script>
+    <script src="Components/JoinForm.js"></script>
+    <script>
+        const instance = new Vue({
+            el: '#root',
+            vuetify: new Vuetify(),
+            components: {
+                CardContainer,
+                GoodsHeader,
+                Carousels,
+                RegistForm,
+                JoinFormComp,
+            },
+            data: {
+                page: 'MainPage',
+                goods: getInstance('id', 'name', 'price', 'address', 'likeCount', 'image'),
+                goodsList: []
+            },
+            methods: {
+                routePage: function (pageName) {
+                    this.page = pageName[0];
+                }
+            },
+            created: async function () {
+                let goodsDatas = [];
+                await axios.get('http://localhost:3000/goods')
+                    .then((response) => {
+                        response.data.map((goods, index) => {
+                            //
+                            goodsDatas.push(getInstance(goods.id, goods.name, goods.price, goods.address, goods.likeCount, goods.image));
+                        });
+                    });
+                this.goodsList = goodsDatas;
+                // console.log(this.goodsList.length);
+            }
+        });
+    </script>
+</body>
+
+</html>

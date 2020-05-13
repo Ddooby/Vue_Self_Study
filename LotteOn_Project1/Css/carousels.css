@@ -1,0 +1,18 @@
+.v-application .display-3 {
+    padding-right: 200px;
+}
+.hot-search-list {
+    position: absolute !important;
+    top: 10%;
+    right: 10%;
+    z-index: 1;
+    height: 280px;
+}
+.hot-search-list .title {
+    border-bottom: 1px solid #fff;
+    margin-bottom: 13px !important;
+    padding-bottom: 10px;
+}
+.order-item {
+    margin-bottom: 10px !important;
+}
