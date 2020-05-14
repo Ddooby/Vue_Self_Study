@@ -1,0 +1,50 @@
+<html>
+    <head>        
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+        <title>끝말잇기</title>
+    </head>
+    <body>
+        <div id="root">
+            <div>{{word}}</div>
+            <form v-on:submit="onSubmitForm">
+                <input v-model="value" ref="answer">
+                <button type="submit">입력</button>
+            </form>
+            <div>{{result}}</div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            // Vue 한테 tag 통제권을 넘기는 행위
+            const instance = new Vue({
+                el : '#root',
+                data : {
+                    word : '제로초',
+                    result : '',
+                    value : '',
+                },
+                methods : {
+                    onSubmitForm : function(e) {
+                        e.preventDefault();
+                        if ( this.word[this.word.length - 1] === this.value[0]) {
+                            this.result = '딩동댕';
+
+                            this.word = this.value;
+                            this.value = '';
+                            // focusing
+                            this.$refs.answer.focus();
+                        } else {
+                            this.result = '땡';
+                            this.$refs.answer.focus();
+                        }
+                    }
+                },
+            })
+        </script>
+    </body>
+</html>

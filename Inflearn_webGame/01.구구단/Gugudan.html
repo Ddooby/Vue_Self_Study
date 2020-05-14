@@ -8,19 +8,18 @@
 <body>
     <div id="root">
         <div>{{firstVal}} 곱하기 {{secondVal}} ?</div>
-        <!--         
-        1)
-        <input type="number" v-model="val">
-        <button v-on:click="doCalculate">입력</button>
-        -->
+            <!--         
+            1)
+            <input type="number" v-model="val">
+            <button v-on:click="doCalculate">입력</button>
+            -->
 
-        <!--          
-        2) -->
-        <form v-on:submit="onSubmitForm">
-            <input type="number" ref="answer" v-model="val">
-            <button type="submit">입력</button>
-        </form>
-        
+            <!--          
+            2) -->
+            <form v-on:submit="onSubmitForm">
+                <input type="number" ref="answer" v-model="val">
+                <button type="submit">입력</button>
+            </form>
 
         <div>{{result}}</div>
     </div>
@@ -67,7 +66,7 @@
                     e.preventDefault();
                     console.log(e);                    
                     
-                    if ( this.firstVal * this.secondVal === this.val ) {
+                    if ( this.firstVal * this.secondVal === parseInt(this.val) ) {
                         this.result = '정답';
 
                         // 화면초기화
@@ -80,6 +79,7 @@
 
                         // 화면초기화
                         this.val = '';
+                        this.$refs.answer.focus();
                     }
                     console.log('onSubmitForm end');
                 }
